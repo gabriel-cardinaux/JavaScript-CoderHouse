@@ -4,22 +4,36 @@
 // Carrito de compras
 // Arrays con lista de productos
 
+const shopContent = document.getElementById("shopContent");
 
 const products = [
-    {name: "English book starter", price: 2000},
-    {name: "English book intermediate", price: 2500},
-    {name: "English book advanced", price: 3000},
-    {name: "French book starter", price: 2500},
-    {name: "French book intermediate", price: 3000},
-    {name: "French book advanced", price: 3500},
-    {name: "Portuguese book starter", price: 1500},
-    {name: "Portuguese book intermediate", price: 2500},
-    {name: "Portuguese book advanced", price: 3000},
+    {id:1, name: "English book starter", price: 2000, img;,},
+    {id:2, name: "English book intermediate", price: 2500, img:,},
+    {id:3, name: "English book advanced", price: 3000, img:,},
+    {id:4, name: "French book starter", price: 2500, img:,},
+    {id:5, name: "French book intermediate", price: 3000, img:,},
+    {id:6, name: "French book advanced", price: 3500, img:,},
+    {id:7, name: "Portuguese book starter", price: 1500, img:,},
+    {id:8, name: "Portuguese book intermediate", price: 2500, img:,},
+    {id:9, name: "Portuguese book advanced", price: 3000, img:,},
 
 ];
 // Carrito función
 let shoppingCart = []
 
+products.forEach((product) => {
+    let content = document.createElement("div");
+    content.className = "Card"
+    content.innerHTML = `<img src="${product.img}"> 
+    <h3 class="product-tag">${product.name}</h3>
+    <p class="price-tag">${product.price} $</p>`;
+    
+    shopContent.append(content);
+    let buy = document.createElement("button")
+    buy.innerText = "Buy";
+    content.append(buy)
+    buy.className = "buy";
+});
 let selection = prompt("Do you want to buy any product available? Yes or No?")
 //Bucle inicial
 while(selection != "Yes" && selection != "No"){
