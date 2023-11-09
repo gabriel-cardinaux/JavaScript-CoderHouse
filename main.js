@@ -47,6 +47,8 @@ products.forEach((product) => {
 });
 
 checkShopCart.addEventListener("click", () =>{
+    modalWindow.innerHTML = "";
+    modalWindow.style.display = "flex";
     const modalHeader = document.createElement("div");
     modalHeader.className = "modal-header"
     modalHeader.innerHTML = `
@@ -56,20 +58,30 @@ checkShopCart.addEventListener("click", () =>{
     const modalButton = document.createElement("h1");
     modalButton.innerText = "x";
     modalButton.className = "modal-header-button";
+    modalButton.addEventListener("click", () => {
+        modalWindow.style.display = "none";
+    });
 
     modalHeader.append(modalButton);
 
     shoppingCart.forEach((product) => {
-    let shoppingCartContent = document.createElement("div")
-    shoppingCart.className = "modal-window-content"
-    shoppingCart.innerHTML = `
+    let shoppingCartContent = document.createElement("div");
+    shoppingCartContent.className = "modal-window-content"
+    shoppingCartContent.innerHTML = `
     <img src="${product.img}">
     <h3>${product.name}</h3>
     <p>${product.price} $</p>
     `;
-    })
+    modalWindow.append(shoppingCartContent);
+    });
+
+    const total = shoppingCart.reduce((acc, the) => acc + the.price, 0)
+    const totalToPay = document.createElement("div");
+    totalToPay.className = "total-content";
+    totalToPay.innerHTML = `total to pay: ${total} $`;
+    modalWindow.append(totalToPay)
     
-})
+});
 /*let selection = prompt("Do you want to buy any product available? Yes or No?")
 //Bucle inicial
 while(selection != "Yes" && selection != "No"){
