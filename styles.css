@@ -32,7 +32,7 @@ body{
     background-position: center;
     height: 100vh;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url(https://previews.123rf.com/images/leoedition/leoedition1708/leoedition170800390/84001974-banner-en-l%C3%ADnea-de-la-bandera-del-libro-libro-de-recuerdos-o-librer%C3%ADa-en-el-fondo.jpg);
+    url(https://previews.123rf.com/images/magicpictures/magicpictures1709/magicpictures170900275/85467898-vector-illustration-of-horizomtal-banner-of-bookshelves-with-retro-style-books-for-vintage-bookstore.jpg);
 }
 .banner-container{
     text-align: center;
@@ -50,4 +50,90 @@ body{
     color: white;
     opacity: 0.7;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/*Products-cards*/
+.Shop-Content{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    margin-left: 80px;
+    margin-right: 80px;
+}
+.Card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.Card > img{
+    width: 90%;
+    height: 250px;
+}
+.price-tag{
+    color: gray;
+    font-size: 22px;
+}
+.Card button{
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: azure;
+    background-color: black;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+.Card button:hover{
+    opacity: 0.7;
+}
+/*Modal-content*/
+.modal-Window{
+    width: 80%;
+    margin: 0 10%;
+    max-height: 88vh;
+    color: white;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    overflow: auto;
+    z-index: 9;
+    top: 12vh;
+    scrollbar-color: none;
+}
+.modal-Window::-webkit-scrollbar{
+    display: none;
+}
+.modal-header{
+    display: flex;
+    justify-content: space-around;
+    background-color: greenyellow;
+}
+
+.modal-header-button{
+    cursor: pointer;
+}
+.modal-Window > .modal-window-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    margin: 10px;
+}
+.modal-Window > div > img{
+    height: 120px;
+    width: 120px;
+}
+.total-content{
+    font-size: 25px;
+    padding: 20px;
+    text-align: center;
+    padding-top: 20px;
 }
