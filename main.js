@@ -11,11 +11,13 @@ const shopCartQuantity = document.getElementById("shopCartQuantity");
 
 
 // Carrito función
-let shoppingCart = JSON.parse(localStorage.getItem("SaveItems")) || []
+
+let shoppingCart = JSON.parse(localStorage.getItem("SavedItems")) || []
 
 const getProducts = async () => {
     const response = await fetch("data.json");
     const data = await response.json();
+
     data.forEach((product) => {
         let content = document.createElement("div");
         content.className = "Card"
@@ -24,11 +26,13 @@ const getProducts = async () => {
         <p class="price-tag">${product.price} $</p>`;
         
         shopContent.append(content);
+
         let buy = document.createElement("button")
         buy.innerText = "Buy";
+        buy.className = "Buy";
+
         content.append(buy);
-        buy.className = "buy";
-    
+
         buy.addEventListener("click", () =>{
         const repeat = shoppingCart.some((repeatedProduct) => repeatedProduct.id === product.id);
         if (repeat){
@@ -54,8 +58,8 @@ const getProducts = async () => {
 
 getProducts();
 
-
-checkShopCart.addEventListener("click", () =>{
+    const modifyShopCart = () => {
+//checkShopCart.addEventListener("click", () =>{
     modalWindow.innerHTML = "";
     modalWindow.style.display = "flex";
     const modalHeader = document.createElement("div");
@@ -63,7 +67,9 @@ checkShopCart.addEventListener("click", () =>{
     modalHeader.innerHTML = `
     <h1 class="modal-tittle">Shop Cart</h1>
     `;
+
     modalWindow.append(modalHeader);
+
     const modalButton = document.createElement("h1");
     modalButton.innerText = "x";
     modalButton.className = "modal-header-button";
@@ -80,35 +86,57 @@ checkShopCart.addEventListener("click", () =>{
     <img src="${product.img}">
     <h3>${product.name}</h3>
     <p>${product.price} $</p>
+    <span class="subtract"> - </span>
     <p>Quantity: ${product.quantity}</p>
+    <span class="add"> + </span>
     <p>Total: ${product.quantity * product.price}</p>
+    <span class="delete-product"> ❎ </span>
     `;
     modalWindow.append(shoppingCartContent);
-    
 
-    let eliminate = document.createElement("span");
-    eliminate.innerText = "❎";
-    eliminate.className = "delete-product";
-    shoppingCartContent.append(eliminate);
-    eliminate.addEventListener("click", removeContent)
+    let subtract = shoppingCartContent.querySelector(".subtract")
+
+    subtract.addEventListener("click", () => {
+        if(product.quantity !== 1){
+        product.quantity--;}
+        localSave();
+        modifyShopCart();
+    });
+
+    let add = shoppingCartContent.querySelector(".add")
+    add.addEventListener("click", () =>{
+        product.quantity++;
+        localSave();
+        modifyShopCart();
+    })
+    
+    let eliminate = shoppingCartContent.querySelector(".delete-product");
+
+    eliminate.addEventListener("click", () => {
+        removeContent(product.id);
+    })
+    
     });
 
     const total = shoppingCart.reduce((acc, the) => acc + the.price * the.quantity, 0)
     const totalToPay = document.createElement("div");
     totalToPay.className = "total-content";
     totalToPay.innerHTML = `total to pay: ${total} $`;
-    modalWindow.append(totalToPay)
-    
-});
 
-const removeContent = () => {
-    const findID = shoppingCart.find((element) => element.id);
+    modalWindow.append(totalToPay);
+    
+}
+checkShopCart.addEventListener("click", modifyShopCart)
+
+const removeContent = (id) => {
+    const findID = shoppingCart.find((element) => element.id === id);
 
     shoppingCart = shoppingCart.filter((shoppingCartID) => {
         return shoppingCartID !== findID;
     })
     shopCartCounter();
     localSave();
+    modifyShopCart();
 }
 
 const shopCartCounter = () => {
@@ -118,6 +146,8 @@ const shopCartCounter = () => {
     shopCartQuantity.innerText = JSON.parse(localStorage.getItem("shopCartLength"))
 }
 shopCartCounter ();
+
+
 //Local Storage
 
 const localSave = () => {

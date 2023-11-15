@@ -152,3 +152,10 @@ body{
     position: absolute;
     display: none;
 }
+
+.subtract{
+    cursor: pointer;
+}
+.add{
+    cursor: pointer;
+}
