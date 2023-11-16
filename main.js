@@ -1,6 +1,5 @@
 //alert("Probando")
 
-
 // Carrito de compras
 // Arrays con lista de productos en data.json
 
@@ -10,13 +9,15 @@ const modalWindow = document.getElementById("modalWindow");
 const shopCartQuantity = document.getElementById("shopCartQuantity");
 
 
-// Carrito función
+// Carrito función y local storage (carrito vacio o con items guardados)
 
 let shoppingCart = JSON.parse(localStorage.getItem("SavedItems")) || []
 
 const getProducts = async () => {
     const response = await fetch("data.json");
     const data = await response.json();
+
+//Recorrido de productos en data.json
 
     data.forEach((product) => {
         let content = document.createElement("div");
@@ -26,6 +27,8 @@ const getProducts = async () => {
         <p class="price-tag">${product.price} $</p>`;
         
         shopContent.append(content);
+
+//Comprar items
 
         let buy = document.createElement("button")
         buy.innerText = "Buy";
@@ -42,6 +45,8 @@ const getProducts = async () => {
                 }
             })
         } else{
+//Push al carrito
+
             shoppingCart.push({
                 id: product.id,
                 name: product.name,
@@ -58,8 +63,8 @@ const getProducts = async () => {
 
 getProducts();
 
+//Modificaciones al carrito (Modal) interacciones
     const modifyShopCart = () => {
-//checkShopCart.addEventListener("click", () =>{
     modalWindow.innerHTML = "";
     modalWindow.style.display = "flex";
     const modalHeader = document.createElement("div");
@@ -94,6 +99,8 @@ getProducts();
     `;
     modalWindow.append(shoppingCartContent);
 
+//Restar cantidad
+
     let subtract = shoppingCartContent.querySelector(".subtract")
 
     subtract.addEventListener("click", () => {
@@ -103,13 +110,17 @@ getProducts();
         modifyShopCart();
     });
 
+//Sumar cantidad
+
     let add = shoppingCartContent.querySelector(".add")
     add.addEventListener("click", () =>{
         product.quantity++;
         localSave();
         modifyShopCart();
     })
-    
+
+//Eliminar cantidad
+
     let eliminate = shoppingCartContent.querySelector(".delete-product");
 
     eliminate.addEventListener("click", () => {
@@ -118,15 +129,18 @@ getProducts();
     
     });
 
+//Total a pagar
     const total = shoppingCart.reduce((acc, the) => acc + the.price * the.quantity, 0)
     const totalToPay = document.createElement("div");
     totalToPay.className = "total-content";
     totalToPay.innerHTML = `total to pay: ${total} $`;
-
+    
     modalWindow.append(totalToPay);
     
 }
 checkShopCart.addEventListener("click", modifyShopCart)
+
+//Remover del carrito
 
 const removeContent = (id) => {
     const findID = shoppingCart.find((element) => element.id === id);
@@ -137,7 +151,14 @@ const removeContent = (id) => {
     shopCartCounter();
     localSave();
     modifyShopCart();
+
+    swal("Removing item...")
+.then((value) => {
+  swal(`Item succesfully removed: `);
+});
 }
+
+//Contador carrito
 
 const shopCartCounter = () => {
     shopCartQuantity.style.display = "block";
