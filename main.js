@@ -156,7 +156,7 @@ const removeContent = (id) => {
 
     swal("Removing item...")
 .then((value) => {
-  swal(`Item succesfully removed: `);
+  swal(`Item succesfully removed`);
 });
 }
 
