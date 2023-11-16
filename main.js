@@ -152,6 +152,8 @@ const removeContent = (id) => {
     localSave();
     modifyShopCart();
 
+//Sweet Alert al remover items del carrito
+
     swal("Removing item...")
 .then((value) => {
   swal(`Item succesfully removed: `);
