@@ -75,6 +75,8 @@ getProducts();
 
     modalWindow.append(modalHeader);
 
+//Modal boton de cierre en el header
+
     const modalButton = document.createElement("h1");
     modalButton.innerText = "x";
     modalButton.className = "modal-header-button";
@@ -83,6 +85,8 @@ getProducts();
     });
 
     modalHeader.append(modalButton);
+
+//Carrito (Modal, contenido)
 
     shoppingCart.forEach((product) => {
     let shoppingCartContent = document.createElement("div");
@@ -99,7 +103,7 @@ getProducts();
     `;
     modalWindow.append(shoppingCartContent);
 
-//Restar cantidad
+//Restar cantidad (items)
 
     let subtract = shoppingCartContent.querySelector(".subtract")
 
@@ -110,7 +114,7 @@ getProducts();
         modifyShopCart();
     });
 
-//Sumar cantidad
+//Sumar cantidad (items)
 
     let add = shoppingCartContent.querySelector(".add")
     add.addEventListener("click", () =>{
@@ -129,7 +133,8 @@ getProducts();
     
     });
 
-//Total a pagar
+//Total a pagar, metodo reduce, acumulador
+
     const total = shoppingCart.reduce((acc, the) => acc + the.price * the.quantity, 0)
     const totalToPay = document.createElement("div");
     totalToPay.className = "total-content";
